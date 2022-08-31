@@ -85,4 +85,14 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            name = "gimbal"
+            url = uri("${gimbalRepositoryURL}")
+            credentials {
+                username = "${gimbalRepositoryUser}"
+                password = "${gimbalRepositoryPassword}"
+            }
+        }
+    }
 }

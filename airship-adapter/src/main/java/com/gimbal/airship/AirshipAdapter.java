@@ -132,6 +132,10 @@ public class AirshipAdapter {
             Log.i(TAG, "Entered place: " + visit.getPlace().getName() + "Entrance date: " +
                     DateUtils.createIso8601TimeStamp(visit.getArrivalTimeInMillis()));
 
+            if (!UAirship.isFlying() && !UAirship.isTakingOff()) {
+                // Some users may not have called UAirship.takeOff() yet
+                return;
+            }
             UAirship.shared(airship -> {
                 if (preferences.getBoolean(TRACK_REGION_EVENT_PREFERENCE_KEY, false)) {
                     RegionEvent event = createRegionEvent(visit, RegionEvent.BOUNDARY_EVENT_ENTER);
@@ -161,6 +165,10 @@ public class AirshipAdapter {
                     DateUtils.createIso8601TimeStamp(visit.getArrivalTimeInMillis()) + "Exit date:" +
                     DateUtils.createIso8601TimeStamp(visit.getDepartureTimeInMillis()));
 
+            if (!UAirship.isFlying() && !UAirship.isTakingOff()) {
+                // Some users may not have called UAirship.takeOff() yet
+                return;
+            }
             UAirship.shared(airship -> {
 
                 if (preferences.getBoolean(TRACK_REGION_EVENT_PREFERENCE_KEY, false)) {
