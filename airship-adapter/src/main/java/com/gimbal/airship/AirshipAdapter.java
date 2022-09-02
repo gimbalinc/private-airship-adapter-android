@@ -71,7 +71,7 @@ public class AirshipAdapter {
     private final List<Listener> listeners = new CopyOnWriteArrayList<>();
     private boolean isAdapterStarted = false;
     private RequestPermissionsTask requestPermissionsTask;
-    private final LinkedList<CachedVisit> cachedVisits = new LinkedList<>();
+    private LinkedList<CachedVisit> cachedVisits = new LinkedList<>();
 
 
     /**
@@ -221,13 +221,10 @@ public class AirshipAdapter {
     }
 
     public void unloadQueuedEvents() {
-        if (cachedVisits.isEmpty()) {
-            // done
-        } else {
-            CachedVisit cachedVisit = cachedVisits.removeFirst();
+        for (CachedVisit cachedVisit: cachedVisits) {
             createAirshipEvent(cachedVisit.visit, cachedVisit.regionEvent);
-            unloadQueuedEvents();
         }
+        cachedVisits = new LinkedList<>();
     }
 
     private void createAirshipEvent(Visit visit, int regionEvent) {
